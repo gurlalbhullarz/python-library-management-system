@@ -1,7 +1,11 @@
 import sqlite3
-def create_database():
+def connect_db():
     conn = sqlite3.connect("library.db")
     cursor = conn.cursor()
+    return conn, cursor
+
+def create_database():
+    conn,cursor = connect_db()
     cursor.execute("""
                    CREATE TABLE IF NOT EXISTS books
                    (
@@ -15,8 +19,7 @@ def create_database():
     conn.commit()
     conn.close()
 def add_book():
-    conn = sqlite3.connect("library.db")
-    cursor = conn.cursor()
+    conn, cursor = connect_db()
     title = input("Enter Book Title: ")
     author = input("Enter the author name: ")
     try:
@@ -56,8 +59,7 @@ def add_book():
     conn.close()
     print("Book added successfully!")
 def view_books():
-    conn = sqlite3.connect("library.db")
-    cursor = conn.cursor()
+    conn, cursor = connect_db()
     cursor.execute("""SELECT books.id, books.title, books.author, books.price, categories.name
     FROM books
     JOIN categories
@@ -71,8 +73,7 @@ def view_books():
     else:
         print("No books found in the library.")
 def search_book():
-    conn = sqlite3.connect("library.db")
-    cursor = conn.cursor()
+    conn, cursor = connect_db()
     search_title = input("Enter the title of the book to search: ")
     cursor.execute("""SELECT books.id, books.title, books.author, books.price, categories.name
     FROM books
@@ -86,8 +87,7 @@ def search_book():
         print("Book not found.")
     conn.close()
 def update_price():
-    conn = sqlite3.connect("library.db")
-    cursor = conn.cursor()
+    conn, cursor = connect_db()
     try:
         book_id = int(input("Enter the Book ID: "))
     except ValueError:
@@ -108,9 +108,13 @@ def update_price():
     conn.commit()
     conn.close()
 def delete_book():
-    conn = sqlite3.connect("library.db")
-    cursor = conn.cursor()
-    book_id = int(input("Enter the ID of the book you want to delete: "))
+    conn, cursor = connect_db()
+    try:
+        book_id = int(input("Enter the ID of the book you want to delete: "))
+    except ValueError:
+        print("Please enter a valid ID.")
+        conn.close()
+        return
     cursor.execute("DELETE FROM books WHERE id = ?", (book_id,))
     if cursor.rowcount > 0:
         print("Book deleted successfully!")
@@ -119,8 +123,7 @@ def delete_book():
     conn.commit()
     conn.close() 
 def expensive_book():
-    conn = sqlite3.connect("library.db")
-    cursor = conn.cursor()
+    conn, cursor = connect_db()
     cursor.execute("""SELECT books.id, books.title, books.author, books.price, categories.name
     FROM books
     JOIN categories
@@ -135,8 +138,7 @@ def expensive_book():
         print("No books found")
     conn.close()
 def cheapest_book():
-    conn = sqlite3.connect("library.db")
-    cursor = conn.cursor()
+    conn, cursor = connect_db()
     cursor.execute("""SELECT books.id, books.title, books.author, books.price, categories.name
     FROM books
     JOIN categories
@@ -207,8 +209,7 @@ def main():
             print("Please choose a valid option")
 
 def create_categories_table():
-    conn = sqlite3.connect("library.db")
-    cursor = conn.cursor()
+    conn, cursor = connect_db()
 
     cursor.execute("""
       CREATE TABLE IF NOT EXISTS categories (
@@ -219,8 +220,7 @@ def create_categories_table():
     conn.commit()
     conn.close()
 def add_category():
-    conn = sqlite3.connect("library.db")
-    cursor = conn.cursor()
+    conn, cursor = connect_db()
 
     category = input("Enter category name: ").strip().upper()
 
@@ -237,8 +237,7 @@ def add_category():
         conn.rollback()
         conn.close()
 def assign_category():
-    conn = sqlite3.connect("library.db")
-    cursor = conn.cursor()
+    conn, cursor = connect_db()
 
     try:
         book_id = int(input("Enter the Book ID: "))
@@ -282,9 +281,8 @@ def assign_category():
     conn.commit()
     conn.close()
 def migrate_books_table():
-    conn = sqlite3.connect("library.db")
+    conn, cursor = connect_db()
     conn.execute("PRAGMA foreign_keys = ON")
-    cursor = conn.cursor()
     cursor.execute("PRAGMA table_info(books)")
     columns = cursor.fetchall()
     column_names = [column[1] for column in columns]
