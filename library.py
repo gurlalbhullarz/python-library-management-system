@@ -73,7 +73,7 @@ class Library:
             )
             self.books.append(book)
     def update_price(self, book, new_price):
-        if not Book.is_vaild_price(new_price):
+        if not Book.is_valid_price(new_price):
             print("Please enter a valid price")
             return
         try:
