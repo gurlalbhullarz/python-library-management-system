@@ -1,14 +1,13 @@
-# SQLite database
-*.db
+**pycache**/
+*.py[cod]
 
-# Python cache
-__pycache__/
-*.pyc
-*.pyo
-
-# Virtual environment
 .venv/
 venv/
+env/
 
-# Environment variables
-.env
+.vscode/
+
+*.log
+
+.DS_Store
+Thumbs.db

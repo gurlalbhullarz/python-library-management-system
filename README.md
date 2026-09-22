@@ -1,93 +1,212 @@
-# 📚 Library Management System
+# 📚 Python Library Management System
 
-A command-line Library Management System built with **Python and SQLite**.
+A Python-based Library Management System built with **Python and SQLite**.
 
-The project started as a basic CRUD application and was later evolved into a relational database application by migrating the existing database structure without deleting the existing data.
+This project is being developed step by step to apply Python programming concepts in a practical application — starting from a procedural implementation and gradually moving toward **Object-Oriented Programming, modular architecture, testing, and advanced features**.
 
-## 🚀 Features
+---
 
-* Add, view, search, and delete books
-* Update book prices
-* Add and manage categories
-* Assign categories to existing books
-* Find the most expensive and cheapest book
-* SQLite database
-* Foreign-key relationships
-* SQL `JOIN` queries
-* Input validation
-* Database migration while preserving existing data
+## 🚀 Project Journey
 
-## 🗄️ Database Design
+The project is intentionally developed incrementally rather than being rewritten from scratch. Existing database data is preserved while new concepts and architecture are introduced.
 
-The project contains two related tables:
+### Phase 1 — Procedural Version ✅
 
-### `books`
+The project originally started as a procedural Python application using functions and SQLite.
 
-* `id`
-* `title`
-* `author`
-* `price`
-* `category_id`
+Implemented:
 
-### `categories`
+* Book management
+* Category management
+* CRUD operations
+* SQLite database integration
+* Book searching
+* Price updates
+* Database transactions
+* Commit and rollback handling
 
-* `id`
-* `name`
+---
 
-### Relationship
+### Phase 2 — Object-Oriented Programming ✅
+
+The procedural application was gradually refactored into an Object-Oriented design while keeping the existing database and data.
+
+Implemented:
+
+* `Book` class
+* `Category` class
+* `Library` class
+* `Database` class
+* Instance methods
+* Static methods
+* Object interaction
+* Composition
+* Dependency injection
+* Encapsulation
+
+---
+
+### Phase 3 — Modular Architecture ✅
+
+The application was separated into dedicated modules to make the code easier to maintain and extend.
+
+Current structure:
 
 ```text
-books.category_id → categories.id
+python-library-management-system/
+│
+├── main.py
+├── models.py
+├── library.py
+├── database.py
+├── library.db
+└── README.md
 ```
 
-## 🔄 Database Migration
+### Responsibilities
 
-The original version of the project did not have categories.
+**`models.py`**
 
-Instead of deleting the existing database and starting again, I migrated the existing structure while preserving the existing book records.
+* `Book`
+* `Category`
 
-The migration involved:
+**`database.py`**
 
-1. Adding `category_id`
-2. Creating the new table structure
-3. Transferring existing records using `INSERT ... SELECT`
-4. Replacing the old table
-5. Renaming the migrated table
-6. Adding the foreign-key relationship
+* SQLite connection
+* Database queries
+* CRUD database operations
+* Commit and rollback
 
-This allowed the existing data to remain intact while evolving the database design.
+**`library.py`**
+
+* Library business logic
+* Book management
+* Category management
+* Searching
+* Validation
+
+**`main.py`**
+
+* Application entry point
+* Initializes the database and library
+
+---
+
+## 🔐 Validation & Data Integrity
+
+The project currently includes:
+
+* Price validation
+* Duplicate-book detection
+* Title + author comparison
+* Case-insensitive duplicate checking
+* Database commit and rollback handling
+* Existing database preservation
+
+Duplicate books are currently identified using the **book title and author**, rather than price.
+
+---
+
+## 🗄️ Database
+
+The application uses **SQLite** for persistent data storage.
+
+The existing `library.db` database is being reused throughout the project's development instead of creating a new database during the OOP refactoring.
+
+This allows the project to evolve while preserving previously stored data.
+
+---
+
+## 🧪 Testing — Next Step
+
+The next development stage is to introduce automated testing.
+
+Planned:
+
+* Unit tests for models
+* Database operation tests
+* Library operation tests
+* Validation tests
+* Duplicate-book tests
+* Error handling tests
+* Rollback tests
+* Testing with a separate test database
+
+---
+
+## 📖 Upcoming Features
+
+After testing, the project will continue toward a more complete library system.
+
+Planned features include:
+
+* Member management
+* Borrowing and returning books
+* Book availability
+* Due dates
+* Overdue tracking
+* Improved database relationships
+* Reporting and statistics
+* More advanced application architecture
+* SQLAlchemy
+* API/backend integration
+
+---
 
 ## 🛠️ Technologies
 
-* Python
-* SQLite
-* SQL
+* **Python**
+* **SQLite**
+* **SQL**
+* **Object-Oriented Programming**
+* **Git & GitHub**
 
-## ▶️ How to Run
+---
 
-Clone the repository:
+## 🎯 Project Goal
 
-```bash
-git clone YOUR_REPOSITORY_URL
-cd library-management-system
+The goal of this project is not only to build a Library Management System.
+
+It is also a practical learning project where I progressively apply:
+
+```text
+Python Fundamentals
+        ↓
+Procedural Programming
+        ↓
+SQLite & SQL
+        ↓
+Object-Oriented Programming
+        ↓
+Modular Architecture
+        ↓
+Validation & Data Integrity
+        ↓
+Automated Testing
+        ↓
+Advanced Features
+        ↓
+SQLAlchemy
+        ↓
+API / Backend Development
 ```
 
-Run the application:
+Each stage builds on the previous one while keeping the project functional and preserving existing data.
 
-```bash
-python library_management.py
-```
+---
 
-The SQLite database will be created automatically.
+## 👨‍💻 Development Approach
 
-## 📸 Project
+This project is being developed **step by step**.
 
-The application runs through a command-line interface where users can manage books and categories.
+Instead of creating a large application all at once, each stage introduces new programming and software-development concepts into the existing project.
 
-## 🔮 Next Version
+The Git history documents this progression from the original procedural implementation to the current Object-Oriented and modular architecture.
 
-The next version of this project will focus on:
+---
 
-* Object-Oriented Programming
-* Better application architecture
-* More advanced features
+## 📌 Status
+
+**Current stage:** OOP + Modular Architecture → Testing
+
+The project is actively being developed.
