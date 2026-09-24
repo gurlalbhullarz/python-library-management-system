@@ -25,7 +25,8 @@ class Book:
 
     def is_valid_price(price):
         if price >=0:
-            return price
+            return True
+        return False
 class Category:
     def __init__(self, id, name):
         self.id = id
